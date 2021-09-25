@@ -31,7 +31,7 @@ class NovoContato extends StatelessWidget {
                 width: double.maxFinite,
                 child: ElevatedButton(
                   onPressed: (){},
-                  child: Text('Criar'),
+                  child: Text('Cadastrar'),
                 ),
               ),
             )
