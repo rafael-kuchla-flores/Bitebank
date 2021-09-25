@@ -25,11 +25,15 @@ class NovoContato extends StatelessWidget {
               style: TextStyle(fontSize: 24.0),
               keyboardType: TextInputType.number,
             ),
-            ElevatedButton(
-              onPressed: (){
-
-              },
-              child: Text('Criar'),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: double.maxFinite,
+                child: ElevatedButton(
+                  onPressed: (){},
+                  child: Text('Criar'),
+                ),
+              ),
             )
           ],
         ),
