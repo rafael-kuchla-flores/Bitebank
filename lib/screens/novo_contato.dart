@@ -1,6 +1,15 @@
+import 'package:bitebank/database/app_database.dart';
+import 'package:bitebank/models/contato.dart';
 import 'package:flutter/material.dart';
 
-class NovoContato extends StatelessWidget {
+class ContactForm extends StatefulWidget {
+  @override
+  State<ContactForm> createState() => _ContactFormState();
+}
+
+class _ContactFormState extends State<ContactForm> {
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _numeroContaController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -13,24 +22,32 @@ class NovoContato extends StatelessWidget {
         child: Column(
           children: [
             TextField(
+              controller: _nomeController,
               decoration: InputDecoration(
-                labelText: 'Nome Completo'
+                labelText: 'Nome Completo',
               ),
               style: TextStyle(fontSize: 24.0),
             ),
             TextField(
+              controller: _numeroContaController,
               decoration: InputDecoration(
-                  labelText: 'Numero da Conta'
+                labelText: 'Numero da Conta',
               ),
               style: TextStyle(fontSize: 24.0),
               keyboardType: TextInputType.number,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(top: 16.0),
               child: SizedBox(
                 width: double.maxFinite,
                 child: ElevatedButton(
-                  onPressed: (){},
+                  onPressed: () {
+                    final nome = _nomeController.text;
+                    final numeroConta =
+                        int.tryParse(_numeroContaController.text);
+                    final Contato novoContato = Contato(0, nome, numeroConta!);
+                    salvar(novoContato).then((id) => Navigator.pop(context));
+                  },
                   child: Text('Cadastrar'),
                 ),
               ),

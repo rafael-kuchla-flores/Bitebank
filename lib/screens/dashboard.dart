@@ -1,4 +1,3 @@
-import 'package:bitebank/main.dart';
 import 'package:bitebank/screens/lista_contatos.dart';
 import 'package:flutter/material.dart';
 import 'package:bitebank/Palette.dart';
