@@ -1,6 +1,7 @@
-import 'package:bitebank/database/app_database.dart';
+import 'package:bitebank/database/dao/contato_dao.dart';
 import 'package:bitebank/models/contato.dart';
 import 'package:bitebank/screens/novo_contato.dart';
+import 'package:bitebank/screens/novo_contato_alterar.dart';
 import 'package:flutter/material.dart';
 
 class ListaContatos extends StatefulWidget {
@@ -10,6 +11,8 @@ class ListaContatos extends StatefulWidget {
 }
 
 class _ListaContatosState extends State<ListaContatos> {
+  final ContatoDao _dao = ContatoDao();
+
   @override
   Widget build(BuildContext context) {
 //    contatos.add(Contato(0,'Eduardo',1000));
@@ -21,14 +24,15 @@ class _ListaContatosState extends State<ListaContatos> {
       ),
       body: FutureBuilder<List<Contato>>(
         initialData: [],
-        future: Future.delayed(Duration(seconds: 1)).then((value) => buscar()),
+        future:
+            Future.delayed(Duration(seconds: 1)).then((value) => _dao.buscar()),
 //        future: buscar(),
         builder: (context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
-          //Quando o Future ainda não foi executado
+            //Quando o Future ainda não foi executado
 //            case ConnectionState.none:
 //              break;
-          //Verificando se o Future ainda esta rodando e não foi finalizado
+            //Verificando se o Future ainda esta rodando e não foi finalizado
             case ConnectionState.waiting:
               return Center(
                 child: Column(
@@ -41,10 +45,10 @@ class _ListaContatosState extends State<ListaContatos> {
               );
 
               break;
-          //Quando nosso snapshot possui dado disponivél mas o Future ainda não finalizou.
+            //Quando nosso snapshot possui dado disponivél mas o Future ainda não finalizou.
 //            case ConnectionState.active:
 //              break;
-          //
+            //
             case ConnectionState.done:
               final List<Contato> contatos = snapshot.data;
               return ListView.builder(
@@ -67,8 +71,9 @@ class _ListaContatosState extends State<ListaContatos> {
               builder: (context) => ContactForm(),
             ),
             //).then((novoContato) => debugPrint(novoContato.toString()),);
-          ).then((value) {
-            setState((){});
+          )
+              .then((value) {
+            setState(() {});
           });
         },
         child: Icon(Icons.add),
@@ -79,6 +84,7 @@ class _ListaContatosState extends State<ListaContatos> {
 
 class _ItemContato extends StatelessWidget {
   final Contato contato;
+  final ContatoDao dao = ContatoDao();
 
   _ItemContato(this.contato);
 
@@ -86,15 +92,49 @@ class _ItemContato extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        title: Text(
-          contato.nome,
-          style: TextStyle(fontSize: 24.0),
-        ),
-        subtitle: Text(
-          contato.numero_conta.toString(),
-          style: TextStyle(fontSize: 16.0),
-        ),
-      ),
+          title: Text(
+            contato.nome,
+            style: TextStyle(fontSize: 24.0),
+          ),
+          subtitle: Text(
+            contato.numeroConta.toString(),
+            style: TextStyle(fontSize: 16.0),
+          ),
+          trailing: Container(
+            width: 100,
+            child: Row(
+              children: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    final contatoAlterar =
+                        Contato(contato.id, contato.nome, contato.numeroConta);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ContactFormAlterar(
+                                contatoAlterar: contatoAlterar)));
+                  },
+                  icon: Icon(
+                    Icons.edit,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    dao.apagar(contato.id);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ListaContatos()));
+                  },
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

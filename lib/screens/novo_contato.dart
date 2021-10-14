@@ -1,4 +1,4 @@
-import 'package:bitebank/database/app_database.dart';
+import 'package:bitebank/database/dao/contato_dao.dart';
 import 'package:bitebank/models/contato.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +10,7 @@ class ContactForm extends StatefulWidget {
 class _ContactFormState extends State<ContactForm> {
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _numeroContaController = TextEditingController();
+  final ContatoDao _dao = ContatoDao();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class _ContactFormState extends State<ContactForm> {
                     final numeroConta =
                         int.tryParse(_numeroContaController.text);
                     final Contato novoContato = Contato(0, nome, numeroConta!);
-                    salvar(novoContato).then((id) => Navigator.pop(context));
+                    _dao.salvar(novoContato).then((id) => Navigator.pop(context));
                   },
                   child: Text('Cadastrar'),
                 ),

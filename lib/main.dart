@@ -1,9 +1,5 @@
-import 'package:bitebank/database/app_database.dart';
-import 'package:bitebank/models/contato.dart';
 import 'package:bitebank/palette.dart';
 import 'package:bitebank/screens/dashboard.dart';
-import 'package:bitebank/screens/novo_contato.dart';
-import 'package:bitebank/screens/lista_contatos.dart';
 import 'package:flutter/material.dart';
 
 void main() {
