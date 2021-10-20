@@ -20,7 +20,7 @@ class _ListaContatosState extends State<ListaContatos> {
 //    contatos.add(Contato(0,'Alfredo',1002));
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contatos'),
+        title: Text('Tranferencias'),
       ),
       body: FutureBuilder<List<Contato>>(
         initialData: [],

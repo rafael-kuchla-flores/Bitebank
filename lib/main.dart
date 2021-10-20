@@ -1,12 +1,11 @@
+import 'package:bitebank/http/webcliente.dart';
 import 'package:bitebank/palette.dart';
 import 'package:bitebank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(ByteBankApp());
-//  salvar(Contato(0,'Joaquim',1009)).then((id){
-//    buscar().then((contatos) => debugPrint(contatos.toString()));
-//  });
+  buscarWeb();
 }
 
 class ByteBankApp extends StatelessWidget {
